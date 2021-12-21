@@ -26,7 +26,7 @@ jobs:
     steps:
       - checkout
       - aws-cli/setup
-          profile-name: stratovate
+          profile-name: "stratovate"
       - run: aws s3 cp ./fn.js s3://stratovate-rsks-test
 
 # Invoke jobs via workflows
