@@ -25,7 +25,7 @@ jobs:
     executor: aws-cli/default
     steps:
       - checkout
-      - aws-cli/setup
+      - aws-cli/setup:
           profile-name: "stratovate"
       - run: aws s3 cp ./fn.js s3://stratovate-rsks-test
 
