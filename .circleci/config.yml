@@ -2,6 +2,10 @@
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 
+# cit AWS CLI orb
+orbs: 
+  aws-cli: circleci/aws-cli@2.0.6
+
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
@@ -17,10 +21,20 @@ jobs:
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
+  aws-cli-upload:
+    executor: aws-cli/default
+    steps:
+      - checkout
+      - aws-cli/setup
+          profile-name: stratovate
+      - run: aws s3 cp ./fn.js s3://stratovate-rsks-test
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-  say-hello-workflow:
+  # say-hello-workflow:
+  #   jobs:
+  #     - say-hello
+  upload-workflow:
     jobs:
-      - say-hello
+      - aws-cli-upload
